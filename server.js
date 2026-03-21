@@ -34,8 +34,12 @@ const resend = new Resend(RESEND_API_KEY);
 
 // ── Webhook signature verification ───────────────────────────────────────────
 // Whop follows the Standard Webhooks spec.
-// The secret from the dashboard must be base64-encoded for the library.
-const webhookVerifier = new Webhook(WHOP_WEBHOOK_SECRET);
+// The standardwebhooks library expects a base64-encoded secret.
+// Whop's secret is a hex string (with optional "ws_" prefix), so we convert it.
+const rawSecret = WHOP_WEBHOOK_SECRET.replace(/^whsec_|^ws_/, "");
+const secretBytes = Buffer.from(rawSecret, "hex");
+const base64Secret = secretBytes.toString("base64");
+const webhookVerifier = new Webhook(base64Secret);
 
 function verifyWebhook(payload, headers) {
   return webhookVerifier.verify(payload, {
