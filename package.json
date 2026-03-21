@@ -1,0 +1,16 @@
+{
+  "name": "whop-cancel-notifier",
+  "version": "1.0.0",
+  "description": "Webhook handler that emails you when a Whop client cancels their subscription",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "resend": "^4.0.0",
+    "standardwebhooks": "^1.0.0"
+  }
+}
